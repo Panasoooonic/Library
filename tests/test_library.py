@@ -1,4 +1,5 @@
 import library
+import pytest;
 from library import (
     Library,
     calculate_fee,
@@ -12,7 +13,7 @@ from library import (
     log_event,
     return_book,
 )
-import library
+
 
 
 def make_library():
@@ -56,6 +57,13 @@ def test_is_admin_rejects_everything_when_not_configured(monkeypatch):
     monkeypatch.setattr(library, "ADMIN_PASSWORD", "")
     assert is_admin("") is False
 
+def test_average_copies_empty_library_returns_zero():
+    assert Library().average_copies() == 0.0
+
+
+def test_add_book_rejects_negative_copies():
+    with pytest.raises(ValueError):
+        Library().add_book("111", "Dune", -5)
 
 def test_log_event_returns_history():
     assert "opened" in log_event("opened")

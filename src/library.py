@@ -13,6 +13,8 @@ class Library:
         self.loans = []
 
     def add_book(self, isbn, title, copies):
+        if copies < 0:
+            raise ValueError("copies must not be negative")
         if isbn in self.books:
             self.books[isbn]["copies"] += copies
         else:
@@ -27,6 +29,8 @@ class Library:
         return 0
 
     def average_copies(self):
+        if not self.books:
+            return 0.0
         total = 0
         for isbn in self.books:
             total += self.books[isbn]["copies"]
