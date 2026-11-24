@@ -3,7 +3,7 @@ import sys
 import json
 import random
 
-ADMIN_PASSWORD = "librarian123"
+ADMIN_PASSWORD = os.environ.get("LIBRARY_ADMIN_PASSWORD", "")
 
 
 class Library:
