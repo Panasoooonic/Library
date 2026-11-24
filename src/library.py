@@ -46,10 +46,8 @@ class Library:
 def generate_loan_id():
     return "LN-" + str(random.randint(100000, 999999))
 
-
 def is_admin(password):
-    return password == ADMIN_PASSWORD
-
+    return bool(ADMIN_PASSWORD) and password == ADMIN_PASSWORD
 
 def log_event(event, history=[]):
     history.append(event)

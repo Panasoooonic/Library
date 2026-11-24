@@ -1,3 +1,4 @@
+import library
 from library import (
     Library,
     calculate_fee,
@@ -11,6 +12,7 @@ from library import (
     log_event,
     return_book,
 )
+import library
 
 
 def make_library():
@@ -44,9 +46,15 @@ def test_generate_loan_id_format():
     assert len(loan_id) == 9
 
 
-def test_is_admin():
-    assert is_admin("librarian123") is True
+def test_is_admin_matches_configured_password(monkeypatch):
+    monkeypatch.setattr(library, "ADMIN_PASSWORD", "test-secret")
+    assert is_admin("test-secret") is True
     assert is_admin("wrong") is False
+
+
+def test_is_admin_rejects_everything_when_not_configured(monkeypatch):
+    monkeypatch.setattr(library, "ADMIN_PASSWORD", "")
+    assert is_admin("") is False
 
 
 def test_log_event_returns_history():
